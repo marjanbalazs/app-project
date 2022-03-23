@@ -6,6 +6,7 @@ version: 2.1
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   say-hello:
+    resource_class: small
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
@@ -18,24 +19,24 @@ jobs:
           name: "Say hello"
           command: "echo Hello, World!"
   say-pr:
+    resource_class: small
     docker:
       - image: cimg/base:stable
     steps:
       - checkout
       - run:
-        name: "Say PR"
-        command: "echo Say PR!"
+          name: "Say PR"
+          command: "echo Say PR!"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   say-hello-workflow:
     jobs:
-      - say-hello
-        filters:
-          branches:
-            only:
-              - main
+      - say_hello:
+          filters:
+            branches:
+              only: main
 
 
 
